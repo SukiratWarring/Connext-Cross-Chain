@@ -10,7 +10,7 @@ const contractInstance = new ethers.Contract(deployedContract, simpleBridgeContr
 // xTransfer parameters
 const originDomain = "1735353714";
 const destinationDomain = "9991";
-const originAsset = "0x925947cB4dcDd71676D9a50d77720A1441460e37";
+const originAsset = "0x7ea6eA49B0b0Ae9c5db7907d139D9Cd3439862a1";
 const amount = "1000000000000000000";
 const slippage = "10000";
 // Estimate the relayer fee
@@ -20,9 +20,10 @@ const relayerFee = (
     destinationDomain
   })
 ).toString();
+console.log('relayerFee.toString()', relayerFee.toString())
 console.log('originAsset,signerAddress,destinationDomain,slippage,relayerFee', originAsset,signerAddress,destinationDomain,slippage,relayerFee)
 // Send the 
-const trx = await contractInstance.xTransfer(originAsset,amount,signerAddress,destinationDomain,slippage,relayerFee,{ value: ethers.utils.parseUnits("0.03", "ether") })
+const trx = await contractInstance.xTransfer(originAsset,amount,signerAddress,destinationDomain,slippage,relayerFee,{ value: relayerFee.toString()})
 await trx.wait()
 console.log('trx', trx)
 }
